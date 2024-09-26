@@ -11,5 +11,5 @@ public class StoreListWithDetailsDTO {
     private Long storeId;
     private String storeName;
     private String regionName;
-    private String categoryName;
+    private String categoryDetailName;
 }

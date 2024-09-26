@@ -26,4 +26,7 @@ public class StoreListDTO {
     
     @Column(name = "category_id")
     private Long categoryId;  
+    
+    @Column(name = "category_detail_id")
+    private Long categoryDetailId;  
 }

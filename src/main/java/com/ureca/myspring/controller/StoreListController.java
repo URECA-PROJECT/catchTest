@@ -28,10 +28,10 @@ public class StoreListController {
     
     // 지역과 카테고리로 필터링된 가게 정보 조회
     @GetMapping("/filtered")
-    public List<StoreListWithDetailsDTO> listStoresByRegionAndCategory(
+    public List<StoreListWithDetailsDTO> listStoresByRegionAndCategoryDetail (
             @RequestParam(value = "regionId") Long regionId,
-            @RequestParam(value = "categoryId") Long categoryId) {
-        // 데이터베이스에서 regionId와 categoryId가 일치하는 가게 목록을 필터링
-        return storeListService.findByRegionAndCategory(regionId, categoryId);
+            @RequestParam(value = "categoryDetailId") Long categoryDetailId) {
+    	// 데이터베이스에서 regionId와 categoryDetailId가 일치하는 가게 목록을 필터링
+        return storeListService.findByRegionAndCategoryDetail(regionId, categoryDetailId);
     }
 }
