@@ -6,4 +6,5 @@ import com.ureca.myspring.dto.MemberDTO;
 
 
 public interface MemberRepository extends JpaRepository<MemberDTO, Long>{
+	MemberDTO findByMemberid(String memberid);
 }
