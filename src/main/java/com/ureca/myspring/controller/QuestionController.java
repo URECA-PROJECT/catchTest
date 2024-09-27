@@ -36,7 +36,6 @@ public class QuestionController {
 		return result;
 	}
 	
-	
 	// 특정 매장의 질문만 조회
 	@GetMapping("/questions/{store_id}")
 	public List<QuestionDTO> getQuestionById(@PathVariable("store_id") int storeID) {

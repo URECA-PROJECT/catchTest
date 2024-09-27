@@ -19,7 +19,7 @@ public class MemberService {
    public List<MemberDTO> listMember() {
       return memberRepository.findAll();
    }
-
+   
    public MemberDTO getMemberById(Long id) {
       return memberRepository.findById(id).orElse(null);
    }
