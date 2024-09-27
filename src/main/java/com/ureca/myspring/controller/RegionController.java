@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import com.ureca.myspring.service.RegionService;
 
 @RestController
 @CrossOrigin(origins = "*") // 클라이언트의 주소
-@RequestMapping("/region") // 공통 경로
+@RequestMapping("/regions") // 공통 경로
 public class RegionController {
 	@Autowired
 	private RegionService regionService;
@@ -31,9 +32,14 @@ public class RegionController {
         return regionService.listZones();
     }
     
-    // 요청된 zone의 모든 city 조회
     @GetMapping("/cities")
-    public List<String> listCities(@RequestParam(value = "zone") String zone) {
-        return regionService.listCities(zone);
+    public List<RegionDTO> listCities(@RequestParam(value = "zone") String zone) {
+        return regionService.listCitiesWithId(zone);
+    }
+    
+    @GetMapping("/{regionId}")
+    public RegionDTO getRegionById(@PathVariable("regionId") Long regionId) {
+        return regionService.getRegionById(regionId);
+        
     }
 }

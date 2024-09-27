@@ -19,7 +19,7 @@ public class MemberService {
    public List<MemberDTO> listMember() {
       return memberRepository.findAll();
    }
-
+   
    public MemberDTO getMemberById(Long id) {
       return memberRepository.findById(id).orElse(null);
    }
@@ -42,8 +42,11 @@ public class MemberService {
       //회원정보 저장
       return memberRepository.save(memberDTO);
    }
+
    
    public MemberDTO getMemberByMemberId(String memberid) {
 	    return memberRepository.findByMemberid(memberid);
 	}
+
+
 }
