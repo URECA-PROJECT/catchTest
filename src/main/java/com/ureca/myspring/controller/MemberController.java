@@ -50,4 +50,25 @@ public class MemberController {
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
     
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody MemberDTO memberDTO) {
+        MemberDTO existingMember = memberService.getMemberByMemberId(memberDTO.getMemberid());
+
+        if (existingMember != null && existingMember.getPassword().equals(memberDTO.getPassword())) {
+            // 로그인 성공
+            if ("admin".equals(existingMember.getRole())) {
+                return ResponseEntity.ok("admin");
+            } else {
+                return ResponseEntity.ok("user");
+            }
+        } else {
+            // 로그인 실패
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        }
+    }
+
+
+
+
 }
