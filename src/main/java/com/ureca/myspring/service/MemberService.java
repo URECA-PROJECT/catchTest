@@ -34,11 +34,14 @@ public class MemberService {
 		if (existingMember != null) {
 			// 필요한 필드 업데이트 (전화번호, 비밀번호 등)
 			existingMember.setPhone(updatedMember.getPhone());
-			existingMember.setPassword(updatedMember.getPassword());
-			existingMember.setUpdatedAt(LocalDateTime.now());
-			
+			existingMember.setPassword(updatedMember.getPassword());	
 			// 저장
 			memberRepository.save(existingMember);
 		}
+	}
+	
+	public MemberDTO registerMember(MemberDTO memberDTO) {
+		//회원정보 저장
+		return memberRepository.save(memberDTO);
 	}
 }

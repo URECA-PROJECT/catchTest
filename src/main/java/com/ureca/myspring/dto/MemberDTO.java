@@ -28,11 +28,7 @@ public class MemberDTO {
     private String phone;             // 전화번호
     private LocalDate birth;          // 생년월일
     private String gender;            // 성별 (M: 남성, F: 여성 등)
-    private String address;           // 주소
+    private String region;           // 주소
     private String role;              // 역할 (기본값: 'user')
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;  // 생성일
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;  // 수정일
 }

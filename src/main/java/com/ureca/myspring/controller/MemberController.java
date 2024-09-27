@@ -43,4 +43,10 @@ public class MemberController {
 		result.put("code", "ok");
 		return result;
 	}
+	
+    @PostMapping("/signup")
+    public ResponseEntity<String> registerMember(@RequestBody MemberDTO memberDTO) {
+        memberService.registerMember(memberDTO);
+        return ResponseEntity.ok("회원가입이 완료되었습니다.");
+    }
 }
