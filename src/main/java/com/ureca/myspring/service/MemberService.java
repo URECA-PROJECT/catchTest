@@ -43,8 +43,4 @@ public class MemberService {
       return memberRepository.save(memberDTO);
    }
    
-   public MemberDTO getMemberByMemberId(String memberid) {
-	    return memberRepository.findByMemberid(memberid);
-	}
-
 }
