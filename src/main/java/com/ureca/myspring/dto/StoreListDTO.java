@@ -18,7 +18,9 @@ import lombok.NoArgsConstructor;
 public class StoreListDTO {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;            
+    private Long id;  
+	
+	@Column(name="store")
     private String store;   
     
     @Column(name = "region_id")
@@ -29,4 +31,7 @@ public class StoreListDTO {
     
     @Column(name = "category_detail_id")
     private Long categoryDetailId;  
+    
+    @Column(name="member_id")
+    private int memberId;
 }
