@@ -59,4 +59,14 @@ public class StoreListService {
                         categoryName))
                 .collect(Collectors.toList());
     }
+
+	public void registerStore(StoreListDTO storeListDTO) {
+		StoreListDTO storeList = new StoreListDTO();
+        storeList.setMemberId(storeListDTO.getMemberId());
+        storeList.setStore(storeListDTO.getStore());
+        storeList.setRegionId(storeListDTO.getRegionId());
+        storeList.setCategoryId(storeListDTO.getCategoryId());
+        storeList.setCategoryDetailId(storeListDTO.getCategoryDetailId());
+        storeListRepository.save(storeList);
+	}
 }

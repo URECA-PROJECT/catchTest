@@ -42,5 +42,4 @@ public class MemberService {
       //회원정보 저장
       return memberRepository.save(memberDTO);
    }
-   
 }
