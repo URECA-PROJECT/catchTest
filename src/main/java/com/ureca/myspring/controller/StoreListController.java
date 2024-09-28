@@ -46,4 +46,5 @@ public class StoreListController {
     	result.put("code", "ok");
     	return result;
     }
+    
 }

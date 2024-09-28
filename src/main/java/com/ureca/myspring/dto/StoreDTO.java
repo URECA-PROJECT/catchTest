@@ -21,9 +21,9 @@ public class StoreDTO {
     private String store;
     private String content;
     private String address;
-    private String openDay; // 여러 날을 저장하기 위한 문자열
+    private String closeDay; // 여러 날을 저장하기 위한 문자열
     private String openTime;
     private String closeTime;
     private Long storeListId; // 참조 필드
-    private byte[] image; // 이미지 필드 추가
+    private String image; // 이미지 필드 추가
 }
