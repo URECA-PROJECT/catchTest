@@ -36,4 +36,8 @@ public class QuestionDTO {
 	@Column(name="is_active")
 	private int isActive; // 질문 활성화 여부 (삭제 시 비활성화)
 	
+	@Column(name = "question_content", columnDefinition = "JSON")
+    @JsonProperty("question_content")
+    private String questionContent; // JSON 형식으로 배열을 저장하는 필드
+	
 }	

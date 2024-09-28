@@ -26,10 +26,18 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    // 특정 가게의 메뉴 조회
-    @GetMapping("/store/{storeId}")
+    // 특정 가게의 모든 메뉴 조회
+    @GetMapping("/{storeId}")
     public List<ProductDTO> getProductsByStoreId(@PathVariable("storeId") Long storeId) {
         return productService.getProductsByStoreId(storeId);
+    }
+    
+ // 특정 가게의 특정 메뉴 조회
+    @GetMapping("/{storeId}/{productId}")
+    public ProductDTO getProductByStoreIdAndProductId(
+            @PathVariable("storeId") Long storeId,
+            @PathVariable("productId") Long productId) {
+        return productService.getProductByStoreIdAndProductId(storeId, productId);
     }
 
 }
