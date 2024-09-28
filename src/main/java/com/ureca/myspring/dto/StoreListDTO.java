@@ -33,5 +33,5 @@ public class StoreListDTO {
     private Long categoryDetailId;  
     
     @Column(name="member_id")
-    private int memberId;
+    private Long memberId;
 }
