@@ -15,7 +15,7 @@ import com.ureca.myspring.service.RegionService;
 
 @RestController
 @CrossOrigin(origins = "*") // 클라이언트의 주소
-@RequestMapping("/regions") // 공통 경로
+@RequestMapping("/region") // 공통 경로
 public class RegionController {
 	@Autowired
 	private RegionService regionService;
