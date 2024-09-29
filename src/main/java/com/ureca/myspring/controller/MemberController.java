@@ -1,6 +1,15 @@
 package com.ureca.myspring.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+
+import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ureca.myspring.dto.MemberDTO;
 import com.ureca.myspring.service.FileStorageService;
@@ -67,26 +77,19 @@ public class MemberController {
     }
     
     
-    
-
-    // 회원 정보 업데이트
+    // 회원 정보 수정 
     @PostMapping("/members/update")
     public Map<String, Object> updateMember(
             @RequestPart("member") MemberDTO member, 
-            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
-    
-    	// ID 체크
-        if (member.getId() == null) {
-            throw new IllegalArgumentException("The given id must not be null");
-        }
+            @RequestPart(value = "profileImage", required = false) String profileImage) {
         
         // 프로필 이미지 처리
         if (profileImage != null && !profileImage.isEmpty()) {
-            String filePath = fileStorageService.storeFile(profileImage);  // 파일 저장
+            // 파일 저장
+            String filePath = fileStorageService.storeBase64Image(profileImage);  // Base64 인코딩된 이미지 처리
             member.setProfileImage(filePath);  // 경로를 DTO의 profileImage 필드에 저장
         }
         
-
         // 멤버 정보 업데이트
         MemberDTO updatedMember = memberService.updateMember(member);
         
@@ -96,5 +99,23 @@ public class MemberController {
         return result;
     }
     
+    @GetMapping("/uploads/{fileName:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable("fileName") String fileName) {
+        try {
+        	Path file = Paths.get("uploads").resolve(fileName).normalize().toAbsolutePath(); // 절대 경로로 변환
 
+            Resource resource = new UrlResource(file.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, "image/jpeg") // 또는 해당 이미지의 MIME 타입
+                    .body(resource);
+            
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
