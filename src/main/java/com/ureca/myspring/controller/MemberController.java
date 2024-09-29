@@ -52,23 +52,22 @@ public class MemberController {
     
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody MemberDTO memberDTO) {
         MemberDTO existingMember = memberService.getMemberByMemberId(memberDTO.getMemberid());
 
         if (existingMember != null && existingMember.getPassword().equals(memberDTO.getPassword())) {
             // 로그인 성공
-            if ("admin".equals(existingMember.getRole())) {
-                return ResponseEntity.ok("admin");
-            } else {
-                return ResponseEntity.ok("user");
-            }
+            existingMember.setPassword(null); // 비밀번호 제거
+
+            // 응답 데이터 생성
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("data", existingMember); // 회원 정보를 "data" 키로 저장
+
+            return ResponseEntity.ok(responseData); // 회원 정보 포함된 응답 반환
         } else {
             // 로그인 실패
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-
-
-
 
 }
