@@ -1,6 +1,8 @@
 package com.ureca.myspring.dto;
 
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,5 +29,7 @@ public class MemberDTO {
     private String gender;            // 성별 (M: 남성, F: 여성 등)
     private String region;           // 주소
     private String role;              // 역할 (기본값: 'user')
-
+    
+    @Column(name = "profile_image")
+    private String profileImage;
 }

@@ -1,5 +1,6 @@
 package com.ureca.myspring.controller;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,21 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import com.ureca.myspring.dto.MemberDTO;
+import com.ureca.myspring.service.FileStorageService;
 import com.ureca.myspring.service.MemberService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class MemberController {
-   @Autowired
-   private MemberService memberService;
-   
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private FileStorageService fileStorageService;
+    
    // 모든 멤버 정보
    @GetMapping("/members")
    public List<MemberDTO> listMember(){      
@@ -35,22 +41,12 @@ public class MemberController {
       return memberService.getMemberById(id);
    }
    
-   // 프로필 수정 내용을 서버에서 수신
-   @PostMapping("/members/update")
-   public Map<String, Object> updateMember(@RequestBody MemberDTO member) {
-      memberService.updateMember(member);
-      Map<String, Object> result = new HashMap<>();
-      result.put("code", "ok");
-      return result;
-   }
-   
     @PostMapping("/signup")
     public ResponseEntity<String> registerMember(@RequestBody MemberDTO memberDTO) {
         memberService.registerMember(memberDTO);
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
     
-
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody MemberDTO memberDTO) {
         MemberDTO existingMember = memberService.getMemberByMemberId(memberDTO.getMemberid());
@@ -69,5 +65,36 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+    
+    
+    
+
+    // 회원 정보 업데이트
+    @PostMapping("/members/update")
+    public Map<String, Object> updateMember(
+            @RequestPart("member") MemberDTO member, 
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
+    
+    	// ID 체크
+        if (member.getId() == null) {
+            throw new IllegalArgumentException("The given id must not be null");
+        }
+        
+        // 프로필 이미지 처리
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String filePath = fileStorageService.storeFile(profileImage);  // 파일 저장
+            member.setProfileImage(filePath);  // 경로를 DTO의 profileImage 필드에 저장
+        }
+        
+
+        // 멤버 정보 업데이트
+        MemberDTO updatedMember = memberService.updateMember(member);
+        
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", "ok");
+        result.put("updatedMember", updatedMember); // 수정된 멤버 정보 추가
+        return result;
+    }
+    
 
 }
