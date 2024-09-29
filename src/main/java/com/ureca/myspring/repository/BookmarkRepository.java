@@ -11,4 +11,6 @@ import com.ureca.myspring.dto.CategoryDetailDTO;
 @Repository
 public interface BookmarkRepository extends JpaRepository<BookmarkDTO, Long> {
     List<BookmarkDTO> findByMemberID(Long memberID);
+
+    BookmarkDTO findByMemberIDAndStoreID(Long memberID, Long storeID);
 }

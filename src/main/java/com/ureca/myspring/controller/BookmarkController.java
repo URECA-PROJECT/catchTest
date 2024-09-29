@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ureca.myspring.dto.BookmarkDTO;
 import com.ureca.myspring.dto.CategoryDTO;
+import com.ureca.myspring.dto.StoreDTO;
 import com.ureca.myspring.service.BookmarkService;
 import com.ureca.myspring.service.CategoryService;
 
@@ -37,4 +40,13 @@ public class BookmarkController {
         result.put("code","ok");
         return result;
     }
+    
+    @DeleteMapping
+    public Map<String, Object> deleteBookmark(@RequestBody Map<String, Long> bookmarkData) {
+        Long memberID = bookmarkData.get("memberID");
+        Long storeID = bookmarkData.get("storeID");
+        return bookmarkService.deleteBookmark(memberID, storeID);
+    }
+    
+
 }
