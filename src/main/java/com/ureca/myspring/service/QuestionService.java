@@ -17,12 +17,20 @@ import com.ureca.myspring.repository.QuestionRepository;
 			return questionRepository.findAll();
 		}
 
-		public List<QuestionDTO> getQuestionById(int storeID) {
+		public List<QuestionDTO> getQuestionById(long storeID) {
 			return questionRepository.findByStoreID(storeID);
 		}
 
-		public void saveQuestions(List<QuestionDTO> questions) {
-			for (QuestionDTO question: questions) {
+		public void saveQuestion(QuestionDTO question) {
+			System.out.println("Question: "+question);
+			questionRepository.save(question);
+		}
+
+		// 질문을 업데이트하여 isActive를 0으로 설정
+		public void updateQuestionIsActive(long id) {
+			QuestionDTO question = questionRepository.findById(id).orElse(null);
+			if (question != null) {
+				question.setIsActive(0);
 				questionRepository.save(question);
 			}
 		}
