@@ -1,14 +1,19 @@
 package com.ureca.myspring.dto;
 
 import java.time.LocalTime;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,4 +42,5 @@ public class StoreDTO {
     private LocalTime closeTime;
     private Long storeListId; // 참조 필드
     private String image; // 이미지 필드 추가
+    
 }
