@@ -28,6 +28,7 @@ public class StoreService {
     }
 
 	public void saveOrUpdateStore(StoreDTO storeDTO) {
+		System.out.println("storeDTO: "+storeDTO);
 		// storeListId로 매장을 찾음
         StoreDTO existingStore = storeRepository.findByStoreListId(storeDTO.getStoreListId());
         
