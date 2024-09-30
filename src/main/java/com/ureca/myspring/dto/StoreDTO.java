@@ -36,5 +36,8 @@ public class StoreDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime closeTime;
     private Long storeListId; // 참조 필드
-    private String image; // 이미지 필드 추가
+
+    @Column(name = "profile_image")
+    private String profileImage;
+
 }

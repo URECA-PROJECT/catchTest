@@ -76,7 +76,6 @@ public class MemberController {
         }
     }
     
-    
     // 회원 정보 수정 
     @PostMapping("/members/update")
     public Map<String, Object> updateMember(

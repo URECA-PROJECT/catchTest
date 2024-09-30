@@ -34,4 +34,7 @@ public class StoreListDTO {
     
     @Column(name="member_id")
     private Long memberId;
+    
+    @Column(name="stord_id")
+    private Long storeId;
 }
