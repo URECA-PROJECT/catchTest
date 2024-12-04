@@ -26,4 +26,13 @@ public class ProductService {
         return productRepository.findByStoreIdAndId(storeId, productId);
     }
 
+    public ProductDTO addProduct(ProductDTO product) {
+    	System.out.println("product: "+ product);
+        return productRepository.save(product);
+    }
+    
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
+    }
+
 }
